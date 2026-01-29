@@ -29,5 +29,8 @@ $(KERNEL): $(OBJS) $(KERNEL_LD)
 run: $(KERNEL)
 	qemu-system-riscv64 -machine virt -bios none -nographic -kernel $(KERNEL)
 
+dump: $(KERNEL)
+	riscv64-linux-gnu-objdump -d $(KERNEL)
+
 clean:
-	rm -f *.o *.elf
+	rm -f $(OBJS) $(KERNEL)
