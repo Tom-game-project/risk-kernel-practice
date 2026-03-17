@@ -43,10 +43,10 @@ DEMO=demo.elf
 $(DEMO): $(DEMO_SRC)
 	riscv64-unknown-elf-gcc -g -nostdlib -Ttext=0x80000000 $(DEMO_SRC) -o $(DEMO)
 
-demo:
-# ターミナル1: ビルドしてQEMUをGDB待機モードで起動
+demo: $(DEMO)
+	# ターミナル1: ビルドしてQEMUをGDB待機モードで起動
 	zellij run -f --name "QEMU (RISC-V)" -- make demo_run
-	$(GDB) -q -x $(GDB_SETUP) demo.elf
+	$(GDB) -q -x $(GDB_SETUP) $(DEMO)
 
 run: $(KERNEL)
 	qemu-system-riscv64 -machine virt -bios none -nographic -kernel $(KERNEL) -s -S
